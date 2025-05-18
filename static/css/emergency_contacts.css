@@ -1,0 +1,122 @@
+.emergency-page-header {
+    background: linear-gradient(135deg, #1a237e 0%, #d32f2f 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.emergency-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.emergency-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.contact-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+    border-left: 5px solid #1a237e;
+    transition: transform 0.3s ease;
+}
+
+.contact-section:hover {
+    transform: translateY(-5px);
+}
+
+.section-header {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.section-title {
+    color: #1a237e;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.contact-list {
+    padding: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-label {
+    font-weight: 500;
+    color: #424242;
+}
+
+.contact-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #d32f2f;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.emergency-icon {
+    margin-right: 0.5rem;
+    color: #d32f2f;
+}
+
+.important-note {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.important-note h5 {
+    color: white;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .emergency-title {
+        font-size: 2rem;
+    }
+}
+
+.call-button {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.call-button:hover {
+    background: #b71c1c;
+    color: white;
+}

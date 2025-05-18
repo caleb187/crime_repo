@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting System</title>
+    <link rel="stylesheet" href="{% static 'css/base_layout.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="base-nav">
+        <div class="base-container">
+            <a href="{% url 'crimes:dashboard' %}" class="base-brand">Crime Reporter</a>
+            <div class="base-nav-links">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <div class="dropdown">
+                            <button class="dropbtn">Admin</button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'admin:crime_analytics' %}">Analytics</a>
+                                <a href="{% url 'admin:crimes_crime_changelist' %}">Manage Cases</a>
+                                <a href="{% url 'admin:accounts_customuser_changelist' %}">Manage Users</a>
+                                <a href="{% url 'admin:index' %}">Admin Panel</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Reports</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'crimes:crime_report' %}">Report Crime</a>
+                            <a href="{% url 'crimes:crime_list' %}">My Reports</a>
+                            {% if user.is_staff %}
+                            <a href="{% url 'admin:crimes_crime_add' %}">Create Report</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="navbar-nav ms-auto">
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i> {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                                <li><a class="dropdown-item" href="{% url 'crimes:profile' %}"><i class="fas fa-id-card"></i> Profile</a></li>
+                                {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+        <div class="base-messages">
+            {% for message in messages %}
+                <div class="base-alert base-alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <footer class="base-footer">
+        <div class="base-container">
+            <p>&copy; 2025 Crime Reporting System</p>
+            {% if user.is_authenticated %}
+            <div class="footer-links">
+                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a>
+                {% if user.is_staff %}
+                <span>|</span>
+                <a href="{% url 'admin:index' %}">Admin</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

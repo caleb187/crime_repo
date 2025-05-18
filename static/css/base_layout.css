@@ -1,0 +1,229 @@
+:root {
+    --base-primary: #006994;
+    --base-secondary: #0088bb;
+    --base-accent: #48cae4;
+    --base-light: #e6f3f7;
+    --base-dark: #003344;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background: var(--base-light);
+}
+
+.base-nav {
+    background: linear-gradient(120deg, var(--base-primary), var(--base-secondary));
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.base-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: wave-slide 2s infinite linear;
+}
+
+@keyframes wave-slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.base-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.base-brand {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.base-nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: transparent;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.dropbtn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background: white;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    z-index: 1000;
+    animation: dropdownFade 0.3s ease;
+    overflow: visible;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--base-dark);
+    padding: 0.8rem 1.2rem;
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background: var(--base-light);
+    color: var(--base-primary);
+}
+
+.base-messages {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 2000;
+    max-width: 300px;
+    pointer-events: none;
+}
+
+.base-alert {
+    pointer-events: auto;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.base-alert-success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #155724;
+}
+
+.base-alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #721c24;
+}
+
+main, .content-wrapper {
+    flex: 1;
+    padding: 2rem;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.base-footer {
+    background: var(--base-dark);
+    color: white;
+    padding: 2rem 0;
+    margin-top: auto;
+    position: relative;
+}
+
+.base-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--base-secondary), var(--base-primary));
+}
+
+.footer-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: var(--base-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .base-nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--base-primary);
+        padding: 1rem;
+        display: none;
+    }
+
+    .base-nav-links.active {
+        display: flex;
+    }
+
+    .dropdown-content {
+        width: 100%;
+        position: static;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .base-messages {
+        width: 90%;
+        right: 5%;
+        top: 70px;
+    }
+}

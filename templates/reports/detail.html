@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="wave-header">
+    <h1>Report #{{ report.id }}</h1>
+    <div class="status-badge {{ report.status|lower }}">{{ report.status }}</div>
+</div>
+
+<div class="container">
+    <div class="report-grid">
+        <div class="card report-details">
+            <h2>Crime Details</h2>
+            <div class="detail-item">
+                <span class="label">Type:</span>
+                <span class="value">{{ report.crime.crime_type }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Location:</span>
+                <span class="value">{{ report.crime.location }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Date Reported:</span>
+                <span class="value">{{ report.report_date|date:"F j, Y" }}</span>
+            </div>
+        </div>
+
+        <div class="card updates-section">
+            <h2>Updates</h2>
+            {% for update in updates %}
+            <div class="update-item">
+                <p class="update-text">{{ update.update_text }}</p>
+                <small class="update-meta">
+                    By {{ update.updated_by.username }} on {{ update.created_at|date:"F j, Y" }}
+                </small>
+            </div>
+            {% endfor %}
+
+            {% if user.is_staff %}
+            <form method="post" class="update-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-primary">Add Update</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

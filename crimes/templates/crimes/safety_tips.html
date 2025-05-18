@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/safety_tips.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="safety-header text-center">
+    <h1 class="display-4">Safety Tips & Guidelines</h1>
+    <p class="lead">Your safety is our priority</p>
+</div>
+
+<div class="container py-4">
+    <div class="row">
+        <!-- Home Safety -->
+        <div class="col-md-6 mb-4">
+            <div class="card safety-card">
+                <div class="card-header home-safety text-white">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="fas fa-home safety-icon"></i>Home Safety
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="safety-list-item">✓ Install proper locks on all doors and windows</li>
+                        <li class="safety-list-item">✓ Keep outdoor areas well-lit</li>
+                        <li class="safety-list-item">✓ Use security systems or cameras if possible</li>
+                        <li class="safety-list-item">✓ Don't hide spare keys outside</li>
+                        <li class="safety-list-item">✓ Keep valuables in a secure safe</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Safety -->
+        <div class="col-md-6 mb-4">
+            <div class="card safety-card">
+                <div class="card-header personal-safety text-white">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="fas fa-user-shield safety-icon"></i>Personal Safety
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="safety-list-item">✓ Stay aware of your surroundings</li>
+                        <li class="safety-list-item">✓ Keep emergency contacts readily available</li>
+                        <li class="safety-list-item">✓ Walk in well-lit areas at night</li>
+                        <li class="safety-list-item">✓ Trust your instincts</li>
+                        <li class="safety-list-item">✓ Keep valuables out of sight when in public</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Digital Safety -->
+        <div class="col-md-6 mb-4">
+            <div class="card safety-card">
+                <div class="card-header digital-safety text-white">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="fas fa-laptop safety-icon"></i>Digital Safety
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="safety-list-item">✓ Use strong, unique passwords</li>
+                        <li class="safety-list-item">✓ Enable two-factor authentication</li>
+                        <li class="safety-list-item">✓ Be cautious with personal information online</li>
+                        <li class="safety-list-item">✓ Keep software and devices updated</li>
+                        <li class="safety-list-item">✓ Be wary of suspicious emails and links</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Response -->
+        <div class="col-md-6 mb-4">
+            <div class="card safety-card">
+                <div class="card-header emergency-response text-white">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="fas fa-exclamation-triangle safety-icon"></i>Emergency Response
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="safety-list-item">✓ Call emergency services immediately (911)</li>
+                        <li class="safety-list-item">✓ Report suspicious activities</li>
+                        <li class="safety-list-item">✓ Document incidents with photos if safe</li>
+                        <li class="safety-list-item">✓ Keep a basic emergency kit at home</li>
+                        <li class="safety-list-item">✓ Know your emergency exits</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="emergency-alert alert mt-4">
+        <h4 class="alert-heading">Emergency Contacts</h4>
+        <p class="mb-0">Emergency Services: <span class="contact-number">{{ emergency_number }}</span></p>
+        <p class="mb-0">Police Hotline: <span class="contact-number">{{ police_hotline }}</span></p>
+    </div>
+</div>
+{% endblock %}

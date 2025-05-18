@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin_manage.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="manage-container">
+    <div class="manage-header">
+        <h1>Manage Cases</h1>
+        <div class="filters">
+            <form method="get" class="search-form">
+                <input type="text" name="search" placeholder="Search cases..." value="{{ search_query }}">
+                <select name="status">
+                    <option value="">All Status</option>
+                    {% for code, label in status_choices %}
+                    <option value="{{ code }}" {% if status_filter == code %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="cases-grid">
+        {% for case in cases %}
+        <div class="case-card">
+            <div class="case-header">
+                <h3>{{ case.title }}</h3>
+                <span class="status {{ case.status|lower }}">{{ case.get_status_display }}</span>
+            </div>
+            <div class="case-content">
+                <p>{{ case.description|truncatewords:30 }}</p>
+                <div class="case-meta">
+                    <span>Reported: {{ case.created_at|date:"M d, Y" }}</span>
+                    <span>By: {{ case.reported_by.username }}</span>
+                </div>
+            </div>
+            <div class="case-actions">
+                <a href="{% url 'crimes:case_detail_admin' case.pk %}" class="btn-primary">Manage Case</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-results">No cases found matching your criteria.</p>
+        {% endfor %}
+    </div>
+
+    {% include 'includes/pagination.html' with page_obj=cases %}
+</div>
+{% endblock %}

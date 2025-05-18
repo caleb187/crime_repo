@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    #crimeMap {
+        height: 600px;
+        width: 100%;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Crime Map</h2>
+    <div id="crimeMap"></div>
+</div>
+
+<script>
+    // Initialize the map
+    var map = L.map('crimeMap').setView([0, 0], 13);
+    
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers for each crime location
+    var crimes = {{ crimes_json|safe }};
+    var bounds = L.latLngBounds();
+    
+    crimes.forEach(function(crime) {
+        if (crime.latitude && crime.longitude) {
+            var marker = L.marker([crime.latitude, crime.longitude])
+                .bindPopup(
+                    '<strong>' + crime.title + '</strong><br>' +
+                    'Type: ' + crime.crime_type + '<br>' +
+                    'Status: ' + crime.status + '<br>' +
+                    'Date: ' + crime.date_occurred
+                )
+                .addTo(map);
+            bounds.extend([crime.latitude, crime.longitude]);
+        }
+    });
+
+    // Fit map to show all markers
+    if (!bounds.isEmpty()) {
+        map.fitBounds(bounds);
+    }
+</script>
+{% endblock %}

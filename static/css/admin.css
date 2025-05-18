@@ -1,0 +1,60 @@
+#header {
+    background: linear-gradient(135deg, #004466, #006699);
+    color: white;
+}
+
+.module h2, .module caption {
+    background: #004466;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input {
+    background: #006699;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #004466;
+}
+
+.button.default, input[type=submit].default {
+    background: #004466;
+}
+
+div.breadcrumbs {
+    background: #006699;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    background: #004466;
+}
+
+.object-tools a:hover {
+    background-color: #006699;
+}
+
+.dashboard .module table th {
+    background: #004466;
+}
+
+.collapse {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.field-priority_flag {
+    text-align: center;
+}
+
+.inline-group {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.inline-related h3 {
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 4px;
+}

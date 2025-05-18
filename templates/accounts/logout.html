@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Logged Out</h1>
+            <p>You have been successfully logged out.</p>
+        </div>
+        <div class="login-footer">
+            <a href="{% url 'accounts:login' %}" class="login-button">Log In Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

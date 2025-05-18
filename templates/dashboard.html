@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div class="user-welcome">
+        <h1>Welcome, {{ user.username }}</h1>
+        <p class="date-today">{{ today|date:"l, F j, Y" }}</p>
+        <span class="user-role">{{ user.is_staff|yesno:"Administrator,Civilian" }}</span>
+    </div>
+</div>
+
+<div class="dashboard-container">
+    {% if user.is_staff %}
+    <!-- Admin Quick Dashboard -->
+    <div class="dashboard-grid">
+        <div class="stats-section">
+            <div class="stat-card primary">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <h3>Total Reports</h3>
+                    <p class="stat-number">{{ total_crimes }}</p>
+                </div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-content">
+                    <h3>Pending</h3>
+                    <p class="stat-number">{{ pending_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="{% url 'admin:crimes_crime_changelist' %}" class="action-button">
+                    <span class="icon">📋</span>
+                    <span>Manage Cases</span>
+                </a>
+                <a href="{% url 'admin:crime_analytics' %}" class="action-button admin">
+                    <span class="icon">📈</span>
+                    <span>Analytics Dashboard</span>
+                </a>
+                <a href="{% url 'crimes:case_map' %}" class="action-button">
+                    <span class="icon">🗺️</span>
+                    <span>Crime Map</span>
+                </a>
+                <a href="{% url 'crimes:reports_export' %}" class="action-button">
+                    <span class="icon">📥</span>
+                    <span>Export Reports</span>
+                </a>
+                <a href="{% url 'crimes:statistics' %}" class="action-button">
+                    <span class="icon">📊</span>
+                    <span>Crime Statistics</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="recent-alerts">
+            <h2>Recent High Priority Cases</h2>
+            <div class="alerts-list">
+                {% for crime in high_priority_crimes %}
+                <div class="alert-item">
+                    <h3>{{ crime.title }}</h3>
+                    <div class="alert-meta">
+                        <span class="priority">⚠️ High Priority</span>
+                        <span class="date">{{ crime.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <a href="{% url 'crimes:crime_detail' pk=crime.pk %}" class="view-button">View Case</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Civilian Dashboard -->
+    <div class="dashboard-grid">
+        <div class="stats-section">
+            <div class="stat-card primary">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                    <h3>My Reports</h3>
+                    <p class="stat-number">{{ user_crimes_count }}</p>
+                </div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-content">
+                    <h3>In Progress</h3>
+                    <p class="stat-number">{{ user_active_cases }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-reports">
+            <h2>My Recent Reports</h2>
+            <div class="reports-list">
+                {% for crime in user_recent_crimes %}
+                <div class="report-item">
+                    <h3>{{ crime.title }}</h3>
+                    <div class="report-meta">
+                        <span class="status {{ crime.status|lower }}">{{ crime.status }}</span>
+                        <span class="date">{{ crime.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <a href="{% url 'crimes:crime_detail' pk=crime.pk %}" class="view-button">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="civilian-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="{% url 'crimes:crime_report' %}" class="action-button primary">
+                    <span class="icon">📝</span>
+                    <span>Report New Crime</span>
+                </a>
+                <a href="{% url 'crimes:crime_list' %}" class="action-button">
+                    <span class="icon">📋</span>
+                    <span>View My Reports</span>
+                </a>
+                <a href="{% url 'accounts:profile' %}" class="action-button">
+                    <span class="icon">👤</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="{% url 'crimes:safety_tips' %}" class="action-button">
+                    <span class="icon">🛡️</span>
+                    <span>Safety Tips</span>
+                </a>
+                <a href="{% url 'crimes:emergency_contacts' %}" class="action-button">
+                    <span class="icon">☎️</span>
+                    <span>Emergency Contacts</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

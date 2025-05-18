@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/crimes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="crimes-container">
+    <div class="crimes-header">
+        <h1>My Reported Crimes</h1>
+        <a href="{% url 'crimes:crime_report' %}" class="crimes-new-button">Report New Crime</a>
+    </div>
+
+    <div class="crimes-grid">
+        {% for crime in crimes %}
+        <div class="crime-card">
+            <div class="crime-type-badge {{ crime.crime_type|lower }}">{{ crime.crime_type }}</div>
+            <h2>{{ crime.title }}</h2>
+            <p class="crime-location">{{ crime.location }}</p>
+            <div class="crime-meta">
+                <span class="crime-date">{{ crime.date_occurred|date:"F j, Y" }}</span>
+                <span class="crime-status {{ crime.status|lower }}">{{ crime.status }}</span>
+            </div>
+            <a href="{% url 'crimes:crime_detail' pk=crime.pk %}" class="crime-view-link">View Details</a>
+        </div>
+        {% empty %}
+        <div class="no-crimes">
+            <p>No crimes reported yet.</p>
+            <a href="{% url 'crimes:crime_report' %}" class="crimes-new-button">Report Your First Crime</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

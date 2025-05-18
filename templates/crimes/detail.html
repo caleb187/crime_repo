@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/crimes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="crimes-container">
+    <div class="crime-detail-card">
+        <div class="crime-detail-header">
+            <h1>{{ crime.title }}</h1>
+            <span class="crime-status {{ crime.status|lower }}">{{ crime.status }}</span>
+        </div>
+
+        <div class="crime-detail-grid">
+            <div class="crime-info-section">
+                <h2>Crime Details</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Type:</span>
+                    <span class="crime-type-badge {{ crime.crime_type|lower }}">{{ crime.crime_type }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Location:</span>
+                    <span>{{ crime.location }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date Occurred:</span>
+                    <span>{{ crime.date_occurred|date:"F j, Y, g:i a" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Reported By:</span>
+                    <span>{{ crime.reported_by.username }}</span>
+                </div>
+            </div>
+
+            <div class="crime-description-section">
+                <h2>Description</h2>
+                <p>{{ crime.description }}</p>
+            </div>
+        </div>
+
+        {% if evidence %}
+        <div class="evidence-section">
+            <h2>Evidence</h2>
+            <div class="evidence-grid">
+                {% for item in evidence %}
+                <div class="evidence-card">
+                    <div class="evidence-file">
+                        {% if item.file %}
+                            <a href="{{ item.file.url }}" class="file-link">View Evidence</a>
+                        {% endif %}
+                    </div>
+                    <p>{{ item.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="crime-actions">
+            <a href="{% url 'crimes:add_evidence' pk=crime.pk %}" class="crime-action-button">Add Evidence</a>
+            {% if user.is_staff %}
+            <form method="post" action="{% url 'crimes:update_status' pk=crime.pk %}" class="status-form">
+                {% csrf_token %}
+                <select name="status" class="status-select">
+                    <option value="PENDING" {% if crime.status == 'PENDING' %}selected{% endif %}>Pending</option>
+                    <option value="INVESTIGATING" {% if crime.status == 'INVESTIGATING' %}selected{% endif %}>Investigating</option>
+                    <option value="RESOLVED" {% if crime.status == 'RESOLVED' %}selected{% endif %}>Resolved</option>
+                    <option value="CLOSED" {% if crime.status == 'CLOSED' %}selected{% endif %}>Closed</option>
+                </select>
+                <button type="submit" class="update-status-button">Update Status</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

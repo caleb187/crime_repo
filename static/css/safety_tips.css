@@ -1,0 +1,60 @@
+.safety-header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.safety-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.safety-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header.home-safety {
+    background: linear-gradient(45deg, #2193b0, #6dd5ed);
+}
+
+.card-header.personal-safety {
+    background: linear-gradient(45deg, #11998e, #38ef7d);
+}
+
+.card-header.digital-safety {
+    background: linear-gradient(45deg, #536976, #292e49);
+}
+
+.card-header.emergency-response {
+    background: linear-gradient(45deg, #eb3349, #f45c43);
+}
+
+.safety-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.safety-list-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.safety-list-item:last-child {
+    border-bottom: none;
+}
+
+.emergency-alert {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2193b0;
+}

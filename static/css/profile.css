@@ -1,0 +1,103 @@
+:root {
+    --profile-primary: #006994;
+    --profile-secondary: #48cae4;
+    --profile-accent: #90e0ef;
+    --profile-light: #caf0f8;
+    --profile-bg: #f0f7ff;
+}
+
+.profile-card {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 105, 148, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--profile-light);
+    position: relative;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--profile-primary);
+    box-shadow: 0 4px 15px rgba(0, 105, 148, 0.2);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.profile-form p {
+    margin: 0;
+}
+
+.profile-form label {
+    display: block;
+    color: var(--profile-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.profile-form input,
+.profile-form select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--profile-light);
+    border-radius: 10px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.profile-form input:focus,
+.profile-form select:focus {
+    border-color: var(--profile-secondary);
+    box-shadow: 0 0 0 4px rgba(72, 202, 228, 0.1);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--profile-primary), var(--profile-secondary));
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: wave-button 2s infinite;
+}
+
+@keyframes wave-button {
+    100% { left: 100%; }
+}

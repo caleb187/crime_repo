@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="wave-header">
+    <h1>Report a Crime</h1>
+</div>
+
+<div class="container">
+    <div class="card">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Submit Report</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

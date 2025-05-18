@@ -1,0 +1,117 @@
+:root {
+    --ocean-deep: #00487C;
+    --ocean-surface: #0096FF;
+    --ocean-foam: #B6E5FF;
+    --ocean-mist: rgba(255, 255, 255, 0.9);
+}
+
+.login-container {
+    min-height: 100vh;
+    background: linear-gradient(45deg, var(--ocean-deep), var(--ocean-surface));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.login-bubble {
+    position: absolute;
+    background: var(--ocean-mist);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.login-card {
+    background: var(--ocean-mist);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.login-header {
+    text-align: center;
+    color: var(--ocean-deep);
+    margin-bottom: 2rem;
+}
+
+.login-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid var(--ocean-foam);
+    border-radius: 10px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--ocean-surface);
+    box-shadow: 0 0 0 4px rgba(0, 150, 255, 0.1);
+}
+
+.login-button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(45deg, var(--ocean-deep), var(--ocean-surface));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+}
+
+.login-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: wave 2s infinite;
+}
+
+@keyframes wave {
+    100% { left: 100%; }
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--ocean-deep);
+}
+
+.login-footer a {
+    color: var(--ocean-surface);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-footer a:hover {
+    color: var(--ocean-deep);
+}
