@@ -56,8 +56,8 @@ MIDDLEWARE = [
 ]
 
 # CSRF Settings
-CSRF_COOKIE_SECURE = True  # for HTTPS
-CSRF_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_SECURE = False  # Set to False for development (no HTTPS)
+CSRF_COOKIE_SAMESITE = 'Lax'  # Less restrictive for development
 CSRF_USE_SESSIONS = True
 
 ROOT_URLCONF = 'crimeproject.urls'
@@ -141,8 +141,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Authentication settings
 LOGIN_REDIRECT_URL = 'crimes:dashboard'
-LOGOUT_REDIRECT_URL = 'login'
-LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+LOGIN_URL = 'accounts:login'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

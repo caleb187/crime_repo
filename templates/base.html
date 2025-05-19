@@ -4,14 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure and efficient crime reporting system for community safety">
+    <meta name="theme-color" content="#1a237e">
     <title>Crime Reporting System</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/base_layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header-actions.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     {% block extra_css %}{% endblock %}
 </head>
-<body>
-    <nav class="base-nav">
+<body>    <nav class="base-nav">
         <div class="base-container">
-            <a href="{% url 'crimes:dashboard' %}" class="base-brand">Crime Reporter</a>
+            <div class="brand-section">
+                <a href="{% url 'crimes:dashboard' %}" class="base-brand">
+                    <span class="brand-name">Crime Reporter</span>
+                    <span class="brand-tagline">Building Safer Communities Together</span>
+                </a>                <div class="quick-actions">
+                    <a href="{% url 'crimes:emergency_contacts' %}" class="action-item emergency-action">
+                        <i class="fas fa-phone-alt"></i> Emergency: 999
+                    </a>
+                    <a href="{% url 'crimes:safety_tips' %}" class="action-item safety-action">
+                        <i class="fas fa-shield-alt"></i> Community Safety
+                    </a>
+                    <a href="#support-modal" class="action-item support-action" data-bs-toggle="modal">
+                        <i class="fas fa-headset"></i> 24/7 Support
+                    </a>
+                </div>
+            </div>
             <div class="base-nav-links">
                 {% if user.is_authenticated %}
                     {% if user.is_staff %}
@@ -47,10 +75,9 @@
                                 {% endif %}
                             </ul>
                         </div>
-                    </div>
-                {% else %}
-                    <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
-                    <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                    </div>                {% else %}
+                    <a class="nav-link" href="{% url 'accounts:login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a class="nav-link" href="{% url 'accounts:register' %}"><i class="fas fa-user-plus"></i> Register</a>
                 {% endif %}
             </div>
         </div>
@@ -64,9 +91,37 @@
                 </div>
             {% endfor %}
         </div>
-    {% endif %}
+    {% endif %}    {% block content %}{% endblock %}
 
-    {% block content %}{% endblock %}
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal-support">
+        <h2><i class="fas fa-headset"></i> 24/7 Support</h2>
+        <div class="support-content">
+            <div class="support-item">
+                <i class="fas fa-phone"></i>
+                <div class="support-details">
+                    <h3>Emergency Hotline</h3>
+                    <p>999 - Available 24/7</p>
+                </div>
+            </div>
+            <div class="support-item">
+                <i class="fas fa-envelope"></i>
+                <div class="support-details">
+                    <h3>Email Support</h3>
+                    <p>support@crimereporter.com</p>
+                </div>
+            </div>
+            <div class="support-item">
+                <i class="fas fa-comment-alt"></i>
+                <div class="support-details">
+                    <h3>Live Chat</h3>
+                    <p>Chat with our support team</p>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-backdrop"></div>
 
     <footer class="base-footer">
         <div class="base-container">
@@ -81,8 +136,19 @@
             </div>
             {% endif %}
         </div>
-    </footer>
-
+    </footer>    <!-- Core JavaScript -->
+    <script src="{% static 'js/main.js' %}" defer></script>
+    
+    <!-- Extra JavaScript -->
     {% block extra_js %}{% endblock %}
+    
+    <!-- Initialize Tooltips and Popovers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize any bootstrap components if needed
+            const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
+        });
+    </script>
 </body>
 </html>

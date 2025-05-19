@@ -11,43 +11,85 @@
         <h1>Welcome, {{ user.username }}</h1>
         <p class="date-today">{{ today|date:"l, F j, Y" }}</p>
         <span class="user-role">{{ user.is_staff|yesno:"Administrator,Civilian" }}</span>
+        <div class="quick-stats">
+            {% if user.is_staff %}
+            <div class="stat-pill"><i class="fas fa-file-alt"></i> {{ total_crimes }} Total Cases</div>
+            <div class="stat-pill warning"><i class="fas fa-clock"></i> {{ pending_count }} Pending</div>
+            <div class="stat-pill success"><i class="fas fa-check-circle"></i> {{ resolved_count }} Resolved</div>
+            {% else %}
+            <div class="stat-pill"><i class="fas fa-file-alt"></i> {{ user_crimes_count }} Your Reports</div>
+            {% endif %}
+        </div>
     </div>
 </div>
 
-<div class="dashboard-container">
-    {% if user.is_staff %}
+<div class="dashboard-container animate-on-scroll">    {% if user.is_staff %}
     <!-- Admin Quick Dashboard -->
     <div class="dashboard-grid">
         <div class="stats-section">
-            <div class="stat-card primary">
-                <div class="stat-icon">📊</div>
+            <div class="stat-card primary animate-on-scroll">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                 <div class="stat-content">
                     <h3>Total Reports</h3>
                     <p class="stat-number">{{ total_crimes }}</p>
+                    <div class="stat-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12% from last month</span>
+                    </div>
                 </div>
             </div>
-            <div class="stat-card warning">
+            <div class="stat-card warning animate-on-scroll">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
                 <div class="stat-content">
-                    <h3>Pending</h3>
+                    <h3>Pending Cases</h3>
                     <p class="stat-number">{{ pending_count }}</p>
+                    <div class="stat-progress">
+                        <div class="progress-bar" style="width: {{ pending_count|default:0|percentage:total_crimes }}%"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="admin-actions">
-            <h2>Quick Actions</h2>
+            <div class="stat-card success animate-on-scroll">
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-content">
+                    <h3>Resolved Cases</h3>
+                    <p class="stat-number">{{ resolved_count }}</p>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8% resolution rate</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card info animate-on-scroll">
+                <div class="stat-icon"><i class="fas fa-user-shield"></i></div>
+                <div class="stat-content">
+                    <h3>Active Officers</h3>
+                    <p class="stat-number">{{ officer_count|default:"5" }}</p>
+                    <span class="stat-label">On duty</span>
+                </div>
+            </div>
+        </div>        <div class="admin-actions animate-on-scroll">
+            <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
             <div class="action-buttons">
-                <a href="{% url 'admin:crimes_crime_changelist' %}" class="action-button">
-                    <span class="icon">📋</span>
-                    <span>Manage Cases</span>
+                <a href="{% url 'admin:crimes_crime_changelist' %}" class="action-button hover-lift">
+                    <span class="icon"><i class="fas fa-tasks"></i></span>
+                    <div class="action-content">
+                        <span class="action-title">Manage Cases</span>
+                        <span class="action-subtitle">Review and update case status</span>
+                    </div>
                 </a>
-                <a href="{% url 'admin:crime_analytics' %}" class="action-button admin">
-                    <span class="icon">📈</span>
-                    <span>Analytics Dashboard</span>
+                <a href="{% url 'admin:crime_analytics' %}" class="action-button admin hover-lift">
+                    <span class="icon"><i class="fas fa-chart-bar"></i></span>
+                    <div class="action-content">
+                        <span class="action-title">Analytics Dashboard</span>
+                        <span class="action-subtitle">View insights and trends</span>
+                    </div>
                 </a>
-                <a href="{% url 'crimes:case_map' %}" class="action-button">
-                    <span class="icon">🗺️</span>
-                    <span>Crime Map</span>
+                <a href="{% url 'crimes:case_map' %}" class="action-button hover-lift">
+                    <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
+                    <div class="action-content">
+                        <span class="action-title">Crime Map</span>
+                        <span class="action-subtitle">Geographical crime distribution</span>
+                    </div>
                 </a>
                 <a href="{% url 'crimes:reports_export' %}" class="action-button">
                     <span class="icon">📥</span>

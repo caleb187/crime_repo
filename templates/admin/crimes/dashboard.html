@@ -1,0 +1,152 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin_analytics.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="analytics-dashboard">
+    <div class="dashboard-header">
+        <h1><i class="fas fa-chart-line"></i> Crime Analytics Dashboard</h1>
+        <div class="dashboard-actions">
+            <button class="btn btn-primary" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Refresh Data
+            </button>
+            <button class="btn btn-success" onclick="exportReport()">
+                <i class="fas fa-file-export"></i> Export Report
+            </button>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <!-- Total Cases Card -->
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Total Cases</h3>
+                <p class="stat-number">{{ total_crimes }}</p>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>{{ cases_trend }}% this month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Cases Card -->
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Active Cases</h3>
+                <p class="stat-number">{{ active_cases }}</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ active_percentage }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resolved Cases Card -->
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Resolved Cases</h3>
+                <p class="stat-number">{{ resolved_cases }}</p>
+                <div class="stat-trend positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>{{ resolution_rate }}% resolution rate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+        <!-- Case Trends Chart -->
+        <div class="chart-card">
+            <h3><i class="fas fa-chart-line"></i> Case Trends</h3>
+            <canvas id="caseTrendsChart"></canvas>
+        </div>
+
+        <!-- Case Types Distribution -->
+        <div class="chart-card">
+            <h3><i class="fas fa-chart-pie"></i> Case Types Distribution</h3>
+            <canvas id="caseTypesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="data-grid">
+        <!-- Recent High Priority Cases -->
+        <div class="data-card">
+            <div class="card-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> High Priority Cases</h3>
+                <span class="badge">{{ high_priority_count }}</span>
+            </div>
+            <div class="card-content">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for case in high_priority_cases %}
+                        <tr>
+                            <td>#{{ case.id }}</td>
+                            <td>{{ case.title }}</td>
+                            <td><span class="status-badge {{ case.status|lower }}">{{ case.status }}</span></td>
+                            <td>{{ case.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'admin:crimes_crime_change' case.id %}" class="action-link">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Case Resolution Timeline -->
+        <div class="data-card">
+            <div class="card-header">
+                <h3><i class="fas fa-calendar-alt"></i> Resolution Timeline</h3>
+            </div>
+            <div class="card-content">
+                <canvas id="resolutionTimelineChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script src="{% static 'js/admin_charts.js' %}"></script>
+<script>
+    // Initialize charts with data from the backend
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeDashboardCharts({{ chart_data|safe }});
+    });
+
+    function refreshData() {
+        location.reload();
+    }
+
+    function exportReport() {
+        window.location.href = "{% url 'admin:export_analytics' %}";
+    }
+</script>
+{% endblock %}
